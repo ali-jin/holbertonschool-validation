@@ -5,6 +5,7 @@ lint:           ## Does the linting of the program using golangci-lint
 	/root/go/bin/golangci-lint run
 
 build:          ## compile the source code of the application to a binary named awesome-api
+	make lint
 	go build
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
