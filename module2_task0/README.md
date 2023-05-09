@@ -2,6 +2,13 @@
 Write a HTTP web server written in the Golang language that listen to incoming HTTP requests on localhost:9999.
 
 
+## Prerequisites
+- Golang in v1.15.*
+- NPM v7+ with NodeJS v14.* (stable)
+- Python 3 with pip module
+- golangci-lint
+
+
 ## Requirements
 You are expected to write a `Makefile` to automate the life-cycle of this application:
 - A `Makefile` should be present and valid
