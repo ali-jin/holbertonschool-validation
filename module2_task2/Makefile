@@ -23,5 +23,5 @@ test:          ## Tests for browser responses
 	curl http://localhost:9999/health
 
 unit-tests:    ## Execute (successfully) the Golang unit tests
-	go test -v -short -coverprofile=coverage-units.out
-	go tool cover -func=coverage-units.out
+	@go test -v -short -coverprofile=coverage-units.out
+	@go tool cover -func=coverage-units.out
