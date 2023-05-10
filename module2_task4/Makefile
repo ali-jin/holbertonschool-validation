@@ -1,7 +1,7 @@
 help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-build:          ## Generate the website from the markdown and configuration files in the directory dist/.
+build: check         ## Generate the website from the markdown and configuration files in the directory dist/.
 	hugo
 
 clean:          ## Cleanup the content of the directory dist/
