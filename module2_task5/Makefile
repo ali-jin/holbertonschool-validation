@@ -1,49 +1,47 @@
-help:           ## Show this help.
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
-
-go-build:  ## compile the source code of the application to a binary named awesome-api.
-	go build
-
-hugo-build: check    ## Generate the website from the markdown and configuration files in the directory dist/.
+hugo-build: check ## Generate the website.
 	hugo
 
-build: hugo-build go-build    ## Generate a website and an API application.
+go-build: ## compile the source code of the application to a binary named awesome-api
+	go build
 
-run:            ## Run the application in background, and write logs into a file named awesome-api.log
+build: hugo-build go-build ## Generate both the static website with ./dist/ and the API application
+
+run: ## Run the Go application in background, and write logs into a file named awesome-api.log
 	./awesome-api >./awesome-api.log 2>&1 &
 
-lint:           ## Does the linting of the program using golangci-lint
-	/root/go/bin/golangci-lint run
-
-stop:           ## Stop the application
+stop: ## Stop the Go application
 	pkill awesome-api
 
-clean:          ## Cleanup the content of the directory dist/ and stop the application. Delete the binary awesome-api and the log file awesome-api.log
-	make stop || true
-	pkill awesome-api || true
-	rm -rf awesome-api awesome-api.log
-	rm -rf coverage-units.out coverage-integrations.out
-	rm -rf dist/*
+lint: ## Should execute all of the lint steps
+	/root/go/bin/golangci-lint run
 
-post:           ## Create a new blog post
-	hugo new posts/$(POST_NAME).md
-	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
-
-test:          ## Tests for browser responses
-	@make unit-tests
+test: ## should execute all of the testing targets (unit-tests, integration-tests and validate
+	@make unit-tests 
 	@make integration-tests
 	@make validate
 
-unit-tests:    ## Execute (successfully) the Golang unit tests
+unit-tests: ## Should be implemented and should execute (successfully) the Golang unit tests
 	go test -v -short -coverprofile=coverage-units.out
 
-integration-tests:     ## Execute (successfully) the Golang integration tests
+integration-tests: ## Should be implemented and should execute (successfully) the Golang integration tests
 	go test -v -coverprofile=coverage-integrations.out
 
-check:         ## Check if there are dead link or a badly written Markdown file
-	markdownlint ./content/posts/*.md
-	markdown-link-check ./content/posts/*.md
+clean: ## should delete all the generated files (logs, test reports, distribution directory, etc.) and call the make stop target as preliminary
+	make stop || true
+	pkill awesome-api || true
+	rm -rf awesome-api awesome-api.log coverage-units.out coverage-integrations.out
+	rm -rf dist/*
 
-validate:      ## look if the generated HTML respects the W3C syntax
+post: ## Create a new blog post
+	hugo new posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
+
+check: ## Checks if there is no dead links in the markdown files & if the Markdown is correctly written
+	@markdownlint content/posts/*.md
+	@markdown-link-check content/posts/*.md
+
+validate: ## checks if  the generated HTML is compliant with the W3C (acceptance testing)
 	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
 
+help: ## Prints out the list of targets and their usage.
+	@grep -E -i ^[a-z] Makefile | sed 's/ check//' | tr -d '##'
