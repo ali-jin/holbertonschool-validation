@@ -6,6 +6,7 @@ build:     ## Generate a website and an API application.
 	go build
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
+	@make build
 	@./awesome-api >./awesome-api.log 2>&1 &
 
 lint:           ## Does the linting of the program using golangci-lint
