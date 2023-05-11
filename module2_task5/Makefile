@@ -1,11 +1,11 @@
 help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-make go-build:  ## compile the source code of the application to a binary named awesome-api.
+go-build:  ## compile the source code of the application to a binary named awesome-api.
 	make lint
 	go build
 
-make hugo-build: check    ## Generate the website from the markdown and configuration files in the directory dist/.
+hugo-build: check    ## Generate the website from the markdown and configuration files in the directory dist/.
 	hugo
 
 build: hugo-build go-build    ## Generate a website and an API application.
