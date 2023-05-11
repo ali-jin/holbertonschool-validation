@@ -17,8 +17,6 @@ You are expected to write a `Makefile` to automate the life-cycle of this applic
 
 
 ## Lifecycle
-- “build-hugo”: Generate the website from the markdown and configuration files in the directory `dist/`.
-- “build-go”: compile the source code of the application to a binary named `awesome-api` (the name `awesome-api` comes from the command `go mod init github.com/<your github handle>/awesome-api`) with the command `go build`. The first build may takes some times.
 - “build”: Generate a website and an API application.
 - “run”: Run the application in background by executing the binary `awesome-api`, and write logs into a file named `awesome-api.log` with the command `./awesome-api >./awesome-api.log 2>&1 &`.
 - “stop”: Stop the application with the command `kill XXXXX` where `XXXXX` is the Process ID of the application. For instance: `kill "$(pgrep awesome-api)"`
