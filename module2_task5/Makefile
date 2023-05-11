@@ -2,7 +2,6 @@ help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 go-build:  ## compile the source code of the application to a binary named awesome-api.
-	make lint
 	go build
 
 hugo-build: check    ## Generate the website from the markdown and configuration files in the directory dist/.
@@ -20,10 +19,11 @@ stop:           ## Stop the application
 	pkill awesome-api
 
 clean:          ## Cleanup the content of the directory dist/ and stop the application. Delete the binary awesome-api and the log file awesome-api.log
-	rm -rf dist/*
+	make stop || true
 	pkill awesome-api || true
 	rm -rf awesome-api awesome-api.log
 	rm -rf coverage-units.out coverage-integrations.out
+	rm -rf dist/*
 
 post:           ## Create a new blog post
 	hugo new posts/$(POST_NAME).md
