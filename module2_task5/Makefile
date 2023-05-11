@@ -2,11 +2,10 @@ help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 build:     ## Generate a website and an API application.
-	hugo
-	go build
+	hugo -d dist/
+	go build -o awesome-api
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
-	@make build
 	@./awesome-api >./awesome-api.log 2>&1 &
 
 lint:           ## Does the linting of the program using golangci-lint
