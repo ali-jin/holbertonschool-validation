@@ -10,11 +10,11 @@ hugo-build: check    ## Generate the website from the markdown and configuration
 
 build: hugo-build go-build    ## Generate a website and an API application.
 
-lint:           ## Does the linting of the program using golangci-lint
-	/root/go/bin/golangci-lint run
-
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
 	./awesome-api >./awesome-api.log 2>&1 &
+
+lint:           ## Does the linting of the program using golangci-lint
+	/root/go/bin/golangci-lint run
 
 stop:           ## Stop the application
 	pkill awesome-api
@@ -30,9 +30,9 @@ post:           ## Create a new blog post
 	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
 
 test:          ## Tests for browser responses
-	make unit-tests
-	make integration-tests
-	make validate
+	@make unit-tests
+	@make integration-tests
+	@make validate
 
 unit-tests:    ## Execute (successfully) the Golang unit tests
 	go test -v -short -coverprofile=coverage-units.out
