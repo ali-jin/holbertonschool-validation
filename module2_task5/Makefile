@@ -1,9 +1,6 @@
 help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-lint:           ## Does the linting of the program using golangci-lint
-	/root/go/bin/golangci-lint run
-
 make go-build:  ## compile the source code of the application to a binary named awesome-api.
 	make lint
 	go build
@@ -11,7 +8,10 @@ make go-build:  ## compile the source code of the application to a binary named 
 make hugo-build: check    ## Generate the website from the markdown and configuration files in the directory dist/.
 	hugo
 
-build: go-build hugo-build   ## Generate a website and an API application.
+build: hugo-build go-build    ## Generate a website and an API application.
+
+lint:           ## Does the linting of the program using golangci-lint
+	/root/go/bin/golangci-lint run
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
 	./awesome-api >./awesome-api.log 2>&1 &
@@ -32,6 +32,7 @@ post:           ## Create a new blog post
 test:          ## Tests for browser responses
 	make unit-tests
 	make integration-tests
+	make validate
 
 unit-tests:    ## Execute (successfully) the Golang unit tests
 	go test -v -short -coverprofile=coverage-units.out
