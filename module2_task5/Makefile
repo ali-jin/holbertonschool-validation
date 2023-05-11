@@ -1,0 +1,48 @@
+help:           ## Show this help.
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+
+lint:           ## Does the linting of the program using golangci-lint
+	/root/go/bin/golangci-lint run
+
+make go-build:  ## compile the source code of the application to a binary named awesome-api.
+	make lint
+	go build
+
+make hugo-build: check    ## Generate the website from the markdown and configuration files in the directory dist/.
+	hugo
+
+build: go-build hugo-build   ## Generate a website and an API application.
+
+run:            ## Run the application in background, and write logs into a file named awesome-api.log
+	./awesome-api >./awesome-api.log 2>&1 &
+
+stop:           ## Stop the application
+	pkill awesome-api
+
+clean:          ## Cleanup the content of the directory dist/ and stop the application. Delete the binary awesome-api and the log file awesome-api.log
+	rm -rf dist/*
+	pkill awesome-api || true
+	rm -rf awesome-api awesome-api.log
+	rm -rf coverage-units.out coverage-integrations.out
+
+post:           ## Create a new blog post
+	hugo new posts/$(POST_NAME).md
+	sed -i 's/title: .*/title: "$(POST_TITLE)"/' content/posts/$(POST_NAME).md
+
+test:          ## Tests for browser responses
+	make unit-tests
+	make integration-tests
+
+unit-tests:    ## Execute (successfully) the Golang unit tests
+	go test -v -short -coverprofile=coverage-units.out
+
+integration-tests:     ## Execute (successfully) the Golang integration tests
+	go test -v -coverprofile=coverage-integrations.out
+
+check:         ## Check if there are dead link or a badly written Markdown file
+	markdownlint ./content/posts/*.md
+	markdown-link-check ./content/posts/*.md
+
+validate:      ## look if the generated HTML respects the W3C syntax
+	python3 /opt/W3C-Validator/w3c_validator.py ./dist/index.html || true
+
