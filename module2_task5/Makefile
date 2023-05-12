@@ -3,7 +3,7 @@ help:           ## Show this help.
 
 build:     ## Generate a website and an API application.
 	@go build
-	@hugo
+	@hugo > /dev/null 2>&1
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
 	@make build
