@@ -2,10 +2,13 @@ help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 build:     ## Generate a website and an API application.
-	hugo -d dist/
-	go build -o awesome-api
+	@make check
+	@make lint
+	@go build
+	@hugo
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
+	@make build
 	@./awesome-api >./awesome-api.log 2>&1 &
 
 lint:           ## Does the linting of the program using golangci-lint
@@ -16,8 +19,7 @@ stop:           ## Stop the application
 
 clean:          ## Cleanup the content of the directory dist/ and stop the application. Delete the binary awesome-api and the log file awesome-api.log
 	pkill awesome-api || true
-	rm -rf awesome-api awesome-api.log
-	rm -rf coverage-units.out coverage-integrations.out
+	rm -rf awesome-api awesome-api.log coverage-units.out coverage-integrations.out
 	rm -rf dist/*
 
 post:           ## Create a new blog post
