@@ -1,0 +1,30 @@
+---
+name: module3_task1
+
+on:
+  push:
+    branches:
+      - main
+
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Clone the repository
+        uses: actions/checkout@v3
+
+      - name: installing Hugo
+        run: cd module3_task1 && ./setup.sh
+
+      - name: install the Markdownlint
+        run: npm install -g markdownlint-cli
+
+      - name: Lint the files 
+        run: cd module3_task2 && make lint
+
+      - name: validate the Makefile
+        run: cd module3_task1 && make help && make build
