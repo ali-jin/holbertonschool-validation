@@ -11,14 +11,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Clone the repository
         uses: actions/checkout@v3
 
       - name: installing Hugo
-        uses: ./setup.sh
+        uses: cd module3_task1 && ./setup.sh
 
       - name: validate the Makefile
         run: cd module3_task1 && make help && make build
