@@ -26,5 +26,8 @@ jobs:
       - name: Lint the files 
         run: cd module3_task2 && make lint
 
+      - name: Archives the files
+        run: cd module3_task2 && make package
+
       - name: validate the Makefile
         run: cd module3_task1 && make help && make build
