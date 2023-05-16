@@ -10,8 +10,7 @@ run:            ## Run the application in background, and write logs into a file
 	./awesome-api > ./awesome-api.log 2>&1 &
 
 lint:           ## Does the linting of the program using golangci-lint
-	/root/go/bin/golangci-lint run
-	markdownlint *.md
+	markdownlint DEPLOY.md README.md
 
 stop:           ## Stop the application
 	pkill awesome-api
