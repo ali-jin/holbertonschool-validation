@@ -24,4 +24,4 @@ You are expected to write a `Makefile` to automate the life-cycle of this applic
 - “test”: You want to test it to ensure that it behaves as expected. With the application started, you may want to use the command line `curl` (or your web browser, or the command `wget` or any other HTTP client):
 - “help”: Prints out the list of targets and their usage
 - “lint”: Does the linting of the program using golangci-lint
-- “unit-tests”
+- “unit-tests”: Execute (successfully) the Golang unit tests
