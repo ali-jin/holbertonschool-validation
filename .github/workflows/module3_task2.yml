@@ -26,6 +26,9 @@ jobs:
       - name: Lint the files
         run: cd module3_task2 && make lint
 
+      - name: Tests
+        run: cd module3_task2 && make test
+
       - name: Archives the files
         run: cd module3_task2 && make package
 
