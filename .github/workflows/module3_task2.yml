@@ -23,7 +23,7 @@ jobs:
       - name: install the Markdownlint
         run: npm install -g markdownlint-cli
 
-      - name: Lint the files 
+      - name: Lint the files
         run: cd module3_task2 && make lint
 
       - name: Archives the files
