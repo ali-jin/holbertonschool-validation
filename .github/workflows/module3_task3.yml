@@ -50,7 +50,7 @@ jobs:
         run: npm install -g markdownlint-cli
 
       - name: Install Hugo
-        run: cd module3_task2 && ./setup.sh
+        run: cd module3_task3 && ./setup.sh
 
       - name: Archives the files
         run: cd module3_task3 && make package
