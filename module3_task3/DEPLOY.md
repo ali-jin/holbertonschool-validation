@@ -1,6 +1,7 @@
 # Manual deployment
 
 ## Preparing a Release
+
 To deploy a new version of the application, run this:
 
 ```bash
@@ -13,6 +14,7 @@ git push origin 1.0.0
 An archive is a single file that contains a collection of other files and/or directories.
 Our Archive is named `awesome-api.zip`
 To unarchive it, run the command unzip files.zip
+
 ```bash
 unzip awesome-api.zip
 ```
