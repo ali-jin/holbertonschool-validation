@@ -1,4 +1,4 @@
-FROM golang:1.15.8-buster
+FROM golang:latest
 WORKDIR /app
 RUN apt-get update && apt-get install -y hugo make npm curl \
     sudo curl -L https://github.com/gohugoio/hugo/releases/download/v0.84.0/hugo_extended_0.84.0_Linux-64bit.deb -o hugo.deb \
