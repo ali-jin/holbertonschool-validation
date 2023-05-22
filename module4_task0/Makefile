@@ -5,7 +5,8 @@ go-build:  ## Compile the go source code of the application
 	docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15.8-buster go build -o awesome-api
 
 hugo-build: ## Generate a website with hugo
-	@hugo
+	docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15.8-buster go build -o awesome-api
+	hugo > /dev/null 2>&1
 
 build:     ## Generate a website and an API application.
 	make go-build
