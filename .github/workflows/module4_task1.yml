@@ -33,8 +33,11 @@ jobs:
       - name: Lint the files
         run: cd module4_task1 && make lint
 
-      - name: Tests
-        run: cd module4_task1 && make test
+      - name: unit-tests
+        run: cd module4_task1 && make unit-tests
+
+      - name: integration-tests
+        run: cd module4_task1 && make integration-tests
 
       - name: Archives the files
         run: cd module4_task1 && make package
