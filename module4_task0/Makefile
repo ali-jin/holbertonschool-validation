@@ -2,7 +2,7 @@ help:           ## Show this help.
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 build:     ## Generate a website and an API application.
-	docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15.8-buster go build -o awesome-api
+	docker run --volume ${GITHUB_WORKSPACE}/module4_task0/:/go golang:1.15.8-buster ls && go build
 	hugo > /dev/null 2>&1
 
 run:            ## Run the application in background, and write logs into a file named awesome-api.log
@@ -30,10 +30,10 @@ test:          ## Tests for browser responses
 	make validate
 
 unit-tests:    ## Execute (successfully) the Golang unit tests
-	docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15.8-buster go test -v -short -coverprofile=coverage-units.out
+	docker run --volume ${GITHUB_WORKSPACE}/module4_task0/:/go golang:1.15.8-buster ls && go test -v -short -coverprofile=coverage-units.out
 
 integration-tests:     ## Execute (successfully) the Golang integration tests
-	docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.15.8-buster go test -v -tags=integration -coverprofile=coverage-integrations.out
+	docker run --volume ${GITHUB_WORKSPACE}/module4_task0/:/go golang:1.15.8-buster ls && go test -v -tags=integration -coverprofile=coverage-integrations.out
 
 check:         ## Check if there are dead link or a badly written Markdown file
 	markdownlint ./content/posts/*.md
